@@ -1,5 +1,5 @@
 import type { AxiosResponse } from "axios";
-import type { Movie } from "../types/Movie";
+import type { Movie } from "../types/movie";
 import { api } from "./api";
 
 interface FetchMoviesResponse {
