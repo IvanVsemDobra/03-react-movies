@@ -6,7 +6,6 @@ interface FetchMoviesResponse {
   results: Movie[];
   total_results: number;
 }
-
 export const fetchMovies = async (query: string): Promise<Movie[]> => {
   const response: AxiosResponse<FetchMoviesResponse> = await api.get(
     "/search/movie",
