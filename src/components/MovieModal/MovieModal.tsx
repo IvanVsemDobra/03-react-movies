@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
-import type { Movie } from "../../types/movie";
+import type { Movie } from "../../types/Movie.ts";
 import styles from "./MovieModal.module.css";
 
 const modalRoot = document.getElementById("modal-root")!;
