@@ -12,9 +12,10 @@ interface MovieModalProps {
 
 export const MovieModal = ({ movie, onClose }: MovieModalProps) => {
   useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
+    const handleEsc = (e: KeyboardEvent): void => {
       if (e.key === "Escape") onClose();
     };
+
     window.addEventListener("keydown", handleEsc);
     document.body.style.overflow = "hidden";
 
@@ -24,7 +25,7 @@ export const MovieModal = ({ movie, onClose }: MovieModalProps) => {
     };
   }, [onClose]);
 
-  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>): void => {
     if (e.target === e.currentTarget) onClose();
   };
 

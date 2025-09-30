@@ -19,16 +19,15 @@ export default function App() {
     setMovies([]);
     setLoading(true);
     setError(false);
+
     try {
       const results = await fetchMovies(query);
       if (!results.length) {
         toast.error("No movies found for your request.");
       }
       setMovies(results);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        console.error(err.message);
-      }
+    } catch (err) {
+      console.error(err);
       setError(true);
     } finally {
       setLoading(false);
@@ -49,7 +48,7 @@ export default function App() {
           onClose={() => setSelectedMovie(null)}
         />
       )}
-      <Toaster position="top-right" />
+      <Toaster position="top-right" /> {/* виправлено */}
     </div>
   );
 }

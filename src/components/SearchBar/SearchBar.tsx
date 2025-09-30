@@ -10,8 +10,8 @@ export const SearchBar = ({ onSubmit }: SearchBarProps) => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
-    const input = form.query as unknown as HTMLInputElement;
-    const value = input.value.trim();
+    const formData = new FormData(form);
+    const value = (formData.get("query") as string).trim();
 
     if (!value) {
       toast.error("Please enter your search query.");
