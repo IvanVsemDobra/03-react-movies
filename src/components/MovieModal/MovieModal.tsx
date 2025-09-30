@@ -5,6 +5,10 @@ import styles from "./MovieModal.module.css";
 
 const modalRoot = document.getElementById("modal-root")!;
 
+const BACKDROP_URL = "https://image.tmdb.org/t/p/original";
+const POSTER_URL = "https://image.tmdb.org/t/p/w500";
+const PLACEHOLDER = "/public/placeholder.svg";
+
 interface MovieModalProps {
   movie: Movie;
   onClose: () => void;
@@ -29,6 +33,13 @@ export const MovieModal = ({ movie, onClose }: MovieModalProps) => {
     if (e.target === e.currentTarget) onClose();
   };
 
+  // Вибираємо картинку за пріоритетом: backdrop → poster → placeholder
+  const imageSrc = movie.backdrop_path
+    ? `${BACKDROP_URL}${movie.backdrop_path}`
+    : movie.poster_path
+    ? `${POSTER_URL}${movie.poster_path}`
+    : PLACEHOLDER;
+
   return createPortal(
     <div
       className={styles.backdrop}
@@ -45,9 +56,13 @@ export const MovieModal = ({ movie, onClose }: MovieModalProps) => {
           &times;
         </button>
         <img
-          src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
-          alt={movie.title}
           className={styles.image}
+          src={imageSrc}
+          alt={movie.title}
+          loading="lazy"
+          onError={(e) => {
+            e.currentTarget.src = PLACEHOLDER;
+          }}
         />
         <div className={styles.content}>
           <h2>{movie.title}</h2>
