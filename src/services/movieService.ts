@@ -1,4 +1,3 @@
-import type { AxiosResponse } from "axios";
 import type { Movie } from "../types/movie";
 import { api } from "./api";
 
@@ -6,14 +5,18 @@ interface FetchMoviesResponse {
   results: Movie[];
   total_results: number;
 }
+interface MoviesResult {
+  movies: Movie[];
+  totalResults: number;
+}
 
-export const fetchMovies = async (query: string): Promise<Movie[]> => {
-  const response: AxiosResponse<FetchMoviesResponse> = await api.get(
-    "/search/movie",
-    {
-      params: { query },
-    }
-  );
+export const fetchMovies = async (query: string): Promise<MoviesResult> => {
+  const { data } = await api.get<FetchMoviesResponse>("/search/movie", {
+    params: { query },
+  });
 
-  return response.data.results;
+  return {
+    movies: data.results,
+    totalResults: data.total_results,
+  };
 };

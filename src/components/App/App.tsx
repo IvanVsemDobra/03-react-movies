@@ -4,7 +4,7 @@ import { SearchBar } from "../SearchBar/SearchBar";
 import { MovieGrid } from "../MovieGrid/MovieGrid";
 import { Loader } from "../Loader/Loader";
 import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
-import { MovieModal } from "..//MovieModal/MovieModal";
+import { MovieModal } from "../MovieModal/MovieModal"; // виправлено подвійний слеш
 import { fetchMovies } from "../../services/movieService";
 import type { Movie } from "../../types/movie";
 import styles from "./App.module.css";
@@ -21,11 +21,13 @@ export default function App() {
     setError(false);
 
     try {
-      const results = await fetchMovies(query);
-      if (!results.length) {
+      const { movies, totalResults } = await fetchMovies(query);
+
+      if (totalResults === 0) {
         toast.error("No movies found for your request.");
       }
-      setMovies(results);
+
+      setMovies(movies);
     } catch (err) {
       console.error(err);
       setError(true);
@@ -48,7 +50,7 @@ export default function App() {
           onClose={() => setSelectedMovie(null)}
         />
       )}
-      <Toaster position="top-right" /> {/* виправлено */}
+      <Toaster position="top-right" />
     </div>
   );
 }
